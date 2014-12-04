@@ -59,6 +59,7 @@ module Focuslight
       end
       if spec[:excludable] && values.nil?
         result[key] = []
+        return
       end
 
       if spec.has_key?(:size)
