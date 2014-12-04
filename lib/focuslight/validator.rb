@@ -57,7 +57,7 @@ module Focuslight
       if spec.has_key?(:default)
         raise ArgumentError, "array parameter cannot have :default"
       end
-      if spec[:excludable] && value.nil?
+      if spec[:excludable] && values.nil?
         result[key] = []
       end
 
