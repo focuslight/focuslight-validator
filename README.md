@@ -4,31 +4,34 @@ Validate http request parameters (or others) by defined rule, without models.
 
 SYNOPSIS:
 
-    require 'focuslight-validator'
+```ruby
+require 'focuslight-validator'
     
-    result = Validator.validate(params, {
-      :request_param_key_name => { # single key, single value
-        :default => default_value,
-        :rule => [
-          Validator.rule(:not_null),
-          Validator.rule(:int_range, 0..10),
-        ],
-      },
-      :array_value_key_name => { # single key, array value
-        :array => true
-        :size => 1..10 # default is unlimited (empty also allowed)
-        # default cannot be used
-        :rule => [ ... ]
-      }
-      # ...
-      [:param1, :param2, :param3] => { # rule for combination of 2 or more params
-        # default cannot be used
-        :rule => Validator::Rule.new(->(p1, p2, p3){ ... }, "error_message")
-      },
-    }
+result = Focuslight::Validator.validate(params, {
+  :request_param_key_name => { # single key, single value
+    default: default_value,
+    rule: [
+      Focuslight::Validator.rule(:not_blank),
+      Focuslight::Validator.rule(:int_range, 0..10),
+    ],
+  },
+  array_value_key_name: { # single key, array value
+    array: true
+    size: 1..10 # default is unlimited (empty also allowed)
+    # default cannot be used
+    rule: [ ... ]
+  },
+  # ...
+  [:param1, :param2, :param3] => { # rule for combination of 2 or more params
+    # default cannot be used
+    :rule => Validator::Rule.new(->(p1, p2, p3){ ... }, "error_message")
+  },
+})
     
-    result.has_error? #=> true/false
-    result.errors #=> Hash( { param_name => "error message" } )
+result.has_error? #=> true/false
+result.errors #=> Hash ( { param_name => "error message" } )
+result.hash   #=> Hash ( contains formatted values )
+```
 
 ## Installation
 
