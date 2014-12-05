@@ -3,6 +3,35 @@ require_relative './spec_helper'
 require 'focuslight/validator'
 
 describe Focuslight::Validator do
+  describe '.validate' do
+    it 'checks validation rules for specified parameters' do
+      result = Focuslight::Validator.validate({}, {
+          param1: {
+            default: 'param-01',
+            rule: [ Focuslight::Validator.rule(:not_blank) ],
+          }
+        }
+      )
+      expect(result.has_error?).to be_false
+      expect(result.errors).to be_empty
+      expect(result.hash).to eql({param1: 'param-01'})
+
+      result = Focuslight::Validator.validate(
+        {key1: 'value10'}, # param
+        {
+          key1: {
+            rule: [
+              Focuslight::Validator.rule(:not_blank),
+              Focuslight::Validator.rule(:lambda, ->(v){ v =~ /^value(\d+)$/ && $1.to_i < 10 }, "too large num"),
+            ]
+          }
+        }
+      )
+      expect(result.has_error?).to be_true
+      expect(result.errors).to eql({key1: "key1: too large num"})
+    end
+  end
+
   describe '.validate_single' do
     it 'returns default value as valid value for params without specified key' do
       result = Focuslight::Validator::Result.new
