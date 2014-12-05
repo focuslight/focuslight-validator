@@ -24,7 +24,7 @@ result = Focuslight::Validator.validate(params, {
   # ...
   [:param1, :param2, :param3] => { # rule for combination of 2 or more params
     # default cannot be used
-    :rule => Validator::Rule.new(->(p1, p2, p3){ ... }, "error_message")
+    rule: Focuslight::Validator::Rule.new(->(p1, p2, p3){ ... }, "error_message")
   },
 })
     
