@@ -12,7 +12,7 @@ describe Focuslight::Validator do
           }
         }
       )
-      expect(result.has_error?).to be_false
+      expect(result.has_error?).to be_falsey
       expect(result.errors).to be_empty
       expect(result.hash).to eql({param1: 'param-01'})
 
@@ -27,7 +27,7 @@ describe Focuslight::Validator do
           }
         }
       )
-      expect(result.has_error?).to be_true
+      expect(result.has_error?).to be_truthy
       expect(result.errors).to eql({key1: "key1: too large num"})
     end
   end
@@ -50,7 +50,7 @@ describe Focuslight::Validator do
       Focuslight::Validator.validate_single(result1, params, :key1, spec1)
       Focuslight::Validator.validate_single(result1, params, :key2, spec1)
       Focuslight::Validator.validate_single(result1, params, :keyx, spec1)
-      expect(result1.has_error?).to be_false
+      expect(result1.has_error?).to be_falsey
       expect(result1[:key1]).to eql("1")
       expect(result1[:key2]).to eql("2")
       expect(result1[:keyx]).to eql("x")
@@ -60,7 +60,7 @@ describe Focuslight::Validator do
       Focuslight::Validator.validate_single(result2, params, :key1, spec2)
       Focuslight::Validator.validate_single(result2, params, :key2, spec2)
       Focuslight::Validator.validate_single(result2, params, :keyx, spec2)
-      expect(result2.has_error?).to be_true
+      expect(result2.has_error?).to be_truthy
       expect(result2[:key1]).to eql(1)
       expect(result2[:key2]).to eql(2)
       expect(result2[:keyx]).to be_nil
@@ -85,7 +85,7 @@ describe Focuslight::Validator do
       Focuslight::Validator.validate_array(result1, params, :key1, spec1)
       Focuslight::Validator.validate_array(result1, params, :key2, spec1)
       Focuslight::Validator.validate_array(result1, params, :key3, spec1)
-      expect(result1.has_error?).to be_false
+      expect(result1.has_error?).to be_falsey
       expect(result1[:key1]).to eql(["0", "1", "2"])
       expect(result1[:key2]).to eql([])
       expect(result1[:key3]).to eql(["kazeburo"])
@@ -95,7 +95,7 @@ describe Focuslight::Validator do
       Focuslight::Validator.validate_array(result2, params, :key1, spec2)
       Focuslight::Validator.validate_array(result2, params, :key2, spec2)
       Focuslight::Validator.validate_array(result2, params, :key3, spec2)
-      expect(result2.has_error?).to be_true
+      expect(result2.has_error?).to be_truthy
       expect(result2[:key1]).to be_nil
       expect(result2[:key2]).to be_nil
       expect(result2[:key3]).to eql(["kazeburo"])
@@ -109,7 +109,7 @@ describe Focuslight::Validator do
       Focuslight::Validator.validate_array(result1, params, :key1, spec1)
       Focuslight::Validator.validate_array(result1, params, :key2, spec1)
       Focuslight::Validator.validate_array(result1, params, :key3, spec1)
-      expect(result1.has_error?).to be_false
+      expect(result1.has_error?).to be_falsey
       expect(result1[:key1]).to eql(["0", "1", "2"])
       expect(result1[:key2]).to eql([])
       expect(result1[:key3]).to eql(["kazeburo"])
@@ -119,7 +119,7 @@ describe Focuslight::Validator do
       Focuslight::Validator.validate_array(result2, params, :key1, spec2)
       Focuslight::Validator.validate_array(result2, params, :key2, spec2)
       Focuslight::Validator.validate_array(result2, params, :key3, spec2)
-      expect(result2.has_error?).to be_true
+      expect(result2.has_error?).to be_truthy
       expect(result2[:key1]).to eql([0, 1, 2])
       expect(result2[:key2]).to eql([])
       expect(result2[:key3]).to be_nil
@@ -139,11 +139,11 @@ describe Focuslight::Validator do
 
       r1 = Focuslight::Validator::Result.new
       Focuslight::Validator.validate_multi_key(r1, params, [:key1, :key2, :key3], spec)
-      expect(r1.has_error?).to be_false
+      expect(r1.has_error?).to be_falsey
 
       r2 = Focuslight::Validator::Result.new
       Focuslight::Validator.validate_multi_key(r2, params, [:key1, :key2, :key4], spec)
-      expect(r2.has_error?).to be_true
+      expect(r2.has_error?).to be_truthy
       expect(r2.errors).to eql({:'key1,key2,key4' => "key1,key2,key4: too large"})
     end
   end
