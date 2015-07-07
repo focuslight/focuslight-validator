@@ -32,7 +32,6 @@ module Focuslight
 
       rules = [spec[:rule]].flatten.compact
 
-      errors = []
       valid = true
       formatted = value
 
@@ -110,7 +109,6 @@ module Focuslight
       end
 
       rules = [spec[:rule]].flatten.compact
-      errors = []
 
       rules.each do |rule|
         unless rule.check(*values)
